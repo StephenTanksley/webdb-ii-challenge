@@ -1,7 +1,9 @@
 
 exports.seed = async function(knex) {
+  //this command clears out all existing data in the database.
   await knex('cars').truncate()
 
+  //this command allows us to reset the database to its original state.
   await knex('cars').insert([
     { 
       VIN: 12582, 
