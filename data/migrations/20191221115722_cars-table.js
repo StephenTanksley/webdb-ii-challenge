@@ -9,7 +9,7 @@ exports.up = async function(knex) {
       table.text('Title Status')
   })
 };
-
+ 
 exports.down = async function(knex) {
   await knex.schema.dropTableIfExists('cars')
 };
