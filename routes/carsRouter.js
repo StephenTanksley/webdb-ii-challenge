@@ -1,6 +1,8 @@
 const express = require('express')
 const db = require('../utils/db')
 
+const { validateCarId, validateCar } = require('../middleware/validate')
+
 const router = express.Router()
 
 router.get('/', async (req, res, next) => {
@@ -14,7 +16,7 @@ router.get('/', async (req, res, next) => {
     }
 })
 
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', validateCarId(), async (req, res, next) => {
     try{
         const cars = await db('cars')
                             .where({ id: req.params.id})
@@ -27,7 +29,7 @@ router.get('/:id', async (req, res, next) => {
     }
 })
 
-router.post('/', async (req, res, next) => {
+router.post('/', validateCar(), async (req, res, next) => {
     try{
         const ids = await db('cars')
                             .insert(req.body)
@@ -38,6 +40,26 @@ router.post('/', async (req, res, next) => {
         res
             .status(201)
             .json(newCar)
+    }
+    catch (error) {
+        next(error)
+    }
+})
+
+router.put('/:id', validateCar(), validateCarId(), async (req, res, next) => {
+    try {
+        const payload = {
+            
+        }
+    }
+    catch (error) {
+        next(error)
+    }
+})
+
+router.delete('/:id', validateCarId(), async (req, res, next) => {
+    try {
+
     }
     catch (error) {
         next(error)
