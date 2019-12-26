@@ -10,8 +10,8 @@ const validateCarId = () => async (req, res, next) => {
             res.status(404)
                 .json({ message: "Item not found" })
 		}
-	} catch (err) {
-		next(err)
+	} catch (error) {
+		next(error)
 	}
 }
 
