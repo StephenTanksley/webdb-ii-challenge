@@ -19,21 +19,12 @@ const validateCar = () => async (req, res, next) => {
     try {
         const car = await req.body
         
-        if(!car) {
-            res.status(400).json({ errorMessage: "Missing required data."})
-
-        } else if (!car.VIN) {
-            res.status(400).json({ errorMessage: "Missing required data - VIN"})
-
-        } else if (!car.Make) {
-            res.status(400).json({ errorMessage: "Missing required data - Make"})
-
-        } else if (!car.Model) {
-            res.status(400).json({ errorMessage: "Missing required data - Model"})
-
-        } else if (!car.Mileage) {
-            res.status(400).json({ errorMessage: "Missing required data - Mileage"})
+        if(!car ||!car.vin || !car.make || !car.model || !car.mileage) {
+            res.status(400).json({ errorMessage: "Missing required data"})
+        } else {
+            next()
         }
+
     }
     catch (error) {
         next(error)
