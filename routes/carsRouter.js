@@ -57,10 +57,15 @@ router.put('/:id', validateCar(), validateCarId(), async (req, res, next) => {
             vin: req.body.vin,
             make: req.body.make,
             model: req.body.model,
-            mileate: req.body.mileage,
+            mileage: req.body.mileage,
             transmission: req.body.transmission,
             title: req.body.title
         }
+        await db('cars')
+                .where('id', req.params.id).update(payload)
+        res.json(await db('cars')
+                .where('id', req.params.id)
+                .first())
     }
     catch (error) {
         next(error)
@@ -69,7 +74,12 @@ router.put('/:id', validateCar(), validateCarId(), async (req, res, next) => {
 
 router.delete('/:id', validateCarId(), async (req, res, next) => {
     try {
-
+        await db('cars')
+            .where('id', req.params.id)
+            .del()
+        res
+            .status(204)
+            .end()
     }
     catch (error) {
         next(error)
